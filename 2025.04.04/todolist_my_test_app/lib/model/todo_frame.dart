@@ -1,17 +1,24 @@
+import 'package:flutter/material.dart';
+
 class Todolist {
+  // TodoList 모델클래스
   // Property
-  bool bookmark; // 즐겨찾기
-  bool comple; // 완료항목
+  bool comple; // 완료 여부
+  IconData? icon; // 아이콘
   String todo; // 할일 내용
-  String icon; // 아이콘
+  bool trashmark; // 휴지통 여부
+  bool bookmark; // 즐겨찾기 여부
+  DateTime createdTime; // 만든 시간
 
   // Constructor
   Todolist(
     {
-      required this.bookmark,
-      required this.comple,
+      this.comple = false,
+      this.icon,
       required this.todo,
-      required this.icon,
+      this.trashmark = false,
+      this.bookmark = false,
+      required this.createdTime,
     }
   );
 }

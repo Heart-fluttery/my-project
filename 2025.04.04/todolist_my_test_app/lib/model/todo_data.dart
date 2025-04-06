@@ -1,5 +1,15 @@
+import 'package:todolist_my_test_app/model/todo_frame.dart';
+
 class TodoData {
-  static bool bookmark = false; // 중요한 일 버튼
-  static bool comple = false; // 완료한 일 버튼
-  static String todo = ""; // 리스트 내용
+  // TodoList 데이터 보관 클래스
+  static List<Todolist> todolist = [];
+
+  static List<Todolist> get activeTodo =>
+  todolist.where((e) => !e.trashmark).toList();
+
+  static List<Todolist> get favoriteTodo =>
+  todolist.where((e) => e.bookmark && !e.trashmark).toList();
+
+  static List<Todolist> get trashedTodo =>
+  todolist.where((e) => e.trashmark).toList();
 }

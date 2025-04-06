@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todolist_my_test_app/model/todo_data.dart';
 import 'package:todolist_my_test_app/model/todo_frame.dart';
+import 'package:todolist_my_test_app/view/page/tododetail.dart';
 
 /*
-  작성
+  작성일 2025.04.07 작성자 이학현
+  메인스크린 & 할 일 목록 & Drawer
 */
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
@@ -14,55 +17,60 @@ class Mainscreen extends StatefulWidget {
 
 class _MainscreenState extends State<Mainscreen> {
   // Property
-  late List <Todolist> todolist;
   late TextEditingController todoController;
 
   @override
   void initState() {
     super.initState();
-    todolist = [];
     todoController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
+    final todos = TodoData.activeTodo;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('오늘 할 일'),
       ),
       body: Center(
-        child: todolist.isEmpty
+        child: todos.isEmpty
         ? Text(
           '아래 버튼을\n눌러\n할 일을 추가해\n보세요\n\n',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF5D5D5D)),
           )
           : ListView.builder(
-            itemCount: todolist.length,
+            itemCount: todos.length,
             itemBuilder: (context, index) {
-              return Card(
-                child:
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        //
-                      }, 
-                      icon: todolist[index].comple
-                      ?Icon(Icons.check_circle_outline)
-                      :Icon(Icons.circle_outlined),
-                    ),
-                    Icon(todolist[index].icon as IconData?),
-                    Text(todolist[index].todo),
-                    IconButton(
-                      onPressed: () {
-                        //
-                      }, 
-                      icon: todolist[index].bookmark
-                      ?Icon(Icons.star)
-                      :Icon(Icons.star_border_outlined),
-                    ),
-                  ],
+              return GestureDetector(
+                onTap: () => 
+                Get.to(Tododetail()),
+                argu,
+                child: Card(
+                  child:
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          //
+                        }, 
+                        icon: todos[index].comple
+                        ?Icon(Icons.check_circle_outline)
+                        :Icon(Icons.circle_outlined),
+                      ),
+                      Icon(todos[index].icon),
+                      Text(todos[index].todo),
+                      IconButton(
+                        onPressed: () {
+                          //
+                        }, 
+                        icon: todos[index].bookmark
+                        ?Icon(Icons.star)
+                        :Icon(Icons.star_border_outlined),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
@@ -165,13 +173,15 @@ class _MainscreenState extends State<Mainscreen> {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  //
+                  Get.back();
                 },
                 child: Text('취소'),
               ),
               ElevatedButton(
                 onPressed: () {
-                  //
+                  todoController.clear();
+                  Get.back();
+                  Get.back();
                 },
                 child: Text('삭제'),
               ),
@@ -181,8 +191,13 @@ class _MainscreenState extends State<Mainscreen> {
       ),
     );
   }
-
   addtodolist(){
-    
+    final text = todoController.text.trim();
+    if (text.isNotEmpty){
+      TodoData.todolist.add(Todolist(todo: text, createdTime: DateTime.now()));
+      todoController.clear();
+      Get.back();
+      setState(() {});
+    }
   }
 } // class
