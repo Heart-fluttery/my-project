@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todolist_my_test_app/model/drawer.dart';
 import 'package:todolist_my_test_app/model/todo_data.dart';
 import 'package:todolist_my_test_app/model/todo_frame.dart';
 import 'package:todolist_my_test_app/view/page/tododetail.dart';
 
 /*
   작성일 2025.04.07 작성자 이학현
-  메인스크린 & 할 일 목록 & Drawer
+  메인스크린 & 할 일 목록
 */
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
@@ -30,8 +31,10 @@ class _MainscreenState extends State<Mainscreen> {
     final todos = TodoData.activeTodo;
 
     return Scaffold(
+      backgroundColor: Color(0xFFFAF9F7),
       appBar: AppBar(
         title: Text('오늘 할 일'),
+        backgroundColor: Color(0xFFFAF9F7),
       ),
       body: Center(
         child: todos.isEmpty
@@ -43,39 +46,69 @@ class _MainscreenState extends State<Mainscreen> {
           : ListView.builder(
             itemCount: todos.length,
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () => 
-                Get.to(Tododetail()),
-                argu,
-                child: Card(
-                  child:
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          //
-                        }, 
-                        icon: todos[index].comple
-                        ?Icon(Icons.check_circle_outline)
-                        :Icon(Icons.circle_outlined),
-                      ),
-                      Icon(todos[index].icon),
-                      Text(todos[index].todo),
-                      IconButton(
-                        onPressed: () {
-                          //
-                        }, 
-                        icon: todos[index].bookmark
-                        ?Icon(Icons.star)
-                        :Icon(Icons.star_border_outlined),
-                      ),
-                    ],
+              return Dismissible(
+                direction: DismissDirection.endToStart,
+                key: ValueKey(todos[index]),
+                onDismissed: (direction) {
+                  todos[index].trashmark = true;
+                  // todos.removeAt(index);
+                  setState(() {});
+                },
+                background: Container(
+                  color: Color(0xFFFF6B6B),
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                    Icons.delete_forever,
+                    size: 50,
+                  ),
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(
+                      Tododetail(),
+                      arguments: index
+                    );
+                  },
+                  child: Card(
+                    child:
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            todos[index].comple = !todos[index].comple;
+                            setState(() {});
+                          }, 
+                          icon: todos[index].comple
+                          ?Icon(Icons.check_circle_outline)
+                          :Icon(Icons.circle_outlined),
+                        ),
+                        Icon(todos[index].icon),
+                        Text(
+                          todos[index].todo,
+                          style: TextStyle(
+                            decoration: todos[index].comple
+                            ? TextDecoration.lineThrough
+                            : null
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            todos[index].bookmark = !todos[index].bookmark;
+                            setState(() {});
+                          }, 
+                          icon: todos[index].bookmark
+                          ?Icon(Icons.star)
+                          :Icon(Icons.star_border_outlined),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
             },
         ),
       ),
+      drawer: mainDrawer(context, 'todo'),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.bottomSheet(
@@ -137,6 +170,7 @@ class _MainscreenState extends State<Mainscreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           addtodolist();
+                          Get.back();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF8BB8E8),
