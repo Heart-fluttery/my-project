@@ -1,3 +1,7 @@
+/*
+  작성일 2025.04.04 작성자 이학현
+  로그인 페이지, 회원가입은 구현 못함
+*/
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_my_test_app/model/user_data.dart';
@@ -96,11 +100,13 @@ class _HomeState extends State<Home> {
       Get.snackbar(
         '다시 확인해 주세요',
         '아이디 또는 비밀번호가 불일치 합니다',
+        duration: Duration(seconds: 2),
       );
     }else if (idcontroller.text == Userdata.idpw[0].userid && pwcontroller.text == Userdata.idpw[0].userpw){
       Get.snackbar(
         '환영합니다', 
-        'Heart-Fluttery',
+        Userdata.nickName,
+        duration: Duration(seconds: 2),
       );
       Get.off(Mainscreen());
     }

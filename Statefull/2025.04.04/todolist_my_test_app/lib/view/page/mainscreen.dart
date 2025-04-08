@@ -1,14 +1,18 @@
+/*
+  작성일 2025.04.07 작성자 이학현
+  메인스크린 & 할 일 목록
+
+  작성일 2025.04.08 작성자 이학현
+  list view tap해서 수정 시 내용 바로 보이게 수정 
+*/
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todolist_my_test_app/model/drawer.dart';
+import 'package:todolist_my_test_app/model/icon_list.dart';
+import 'package:todolist_my_test_app/widget/drawer.dart';
 import 'package:todolist_my_test_app/model/todo_data.dart';
 import 'package:todolist_my_test_app/model/todo_frame.dart';
 import 'package:todolist_my_test_app/view/page/tododetail.dart';
 
-/*
-  작성일 2025.04.07 작성자 이학현
-  메인스크린 & 할 일 목록
-*/
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
 
@@ -19,11 +23,13 @@ class Mainscreen extends StatefulWidget {
 class _MainscreenState extends State<Mainscreen> {
   // Property
   late TextEditingController todoController;
+  late IconData selecticon;
 
   @override
   void initState() {
     super.initState();
     todoController = TextEditingController();
+    selecticon = IconList.iconlist[0];
   }
 
   @override
@@ -33,7 +39,8 @@ class _MainscreenState extends State<Mainscreen> {
     return Scaffold(
       backgroundColor: Color(0xFFFAF9F7),
       appBar: AppBar(
-        title: Text('오늘 할 일'),
+        centerTitle: true,
+        title: Text('To-do List'),
         backgroundColor: Color(0xFFFAF9F7),
       ),
       body: Center(
@@ -46,12 +53,13 @@ class _MainscreenState extends State<Mainscreen> {
           : ListView.builder(
             itemCount: todos.length,
             itemBuilder: (context, index) {
+              // 리스트 스와이프로 삭제 기능
               return Dismissible(
                 direction: DismissDirection.endToStart,
                 key: ValueKey(todos[index]),
                 onDismissed: (direction) {
                   todos[index].trashmark = true;
-                  // todos.removeAt(index);
+                  // todos.removeAt(index); // 필터링으로 반환된 리스트라 직접 삭제 X
                   setState(() {});
                 },
                 background: Container(
@@ -63,16 +71,23 @@ class _MainscreenState extends State<Mainscreen> {
                   ),
                 ),
                 child: GestureDetector(
-                  onTap: () {
-                    Get.to(
-                      Tododetail(),
-                      arguments: index
-                    );
+                  onTap: () async {
+                    final result = await Get.to(() => Tododetail(), arguments: index);
+                    if (result != null){
+                    TodoData.todolist[index] =result;
+                    setState(() {});
+                    }
+                    // 수정 내용이 바로 반영이 안 돼서 위같이 수정
+                    // Get.to(
+                    //   Tododetail(),
+                    //   arguments: index
+                    // );
                   },
                   child: Card(
                     child:
                     Row(
                       children: [
+                        // 완료 버튼
                         IconButton(
                           onPressed: () {
                             todos[index].comple = !todos[index].comple;
@@ -83,14 +98,18 @@ class _MainscreenState extends State<Mainscreen> {
                           :Icon(Icons.circle_outlined),
                         ),
                         Icon(todos[index].icon),
-                        Text(
-                          todos[index].todo,
-                          style: TextStyle(
-                            decoration: todos[index].comple
-                            ? TextDecoration.lineThrough
-                            : null
+                        Expanded(
+                          child: Text(
+                            todos[index].todo,
+                            style: TextStyle(
+                              decoration: todos[index].comple
+                              ? TextDecoration.lineThrough
+                              : null
+                            ),
+                            overflow: TextOverflow.ellipsis, // 텍스트가 길어질 때 잘리도록 처리
                           ),
                         ),
+                        // 중요한 일 버튼
                         IconButton(
                           onPressed: () {
                             todos[index].bookmark = !todos[index].bookmark;
@@ -109,86 +128,123 @@ class _MainscreenState extends State<Mainscreen> {
         ),
       ),
       drawer: mainDrawer(context, 'todo'),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.bottomSheet(
-            Container(
-              width: 500,
-              height: 300,
-              color: Colors.grey,
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        '할 일 추가하기',
-                        style: TextStyle(fontSize: 20),
+      // floatingActionButton도 위젯으로 만들고 싶었는데 생각보다 복잡해서 보류
+floatingActionButton: FloatingActionButton(
+  onPressed: () {
+    Get.bottomSheet(
+      StatefulBuilder(
+        builder: (context, setState) {
+          return Container(
+            width: double.infinity,
+            height: 400,
+            color: Color(0xFFD7C0E6),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      '할 일 추가하기',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+                      child: TextField(
+                        controller: todoController,
+                        minLines: 1,
+                        maxLines: 3,
+                        decoration: InputDecoration(
+                          hintText: '내용을 입력해 주세요',
+                          hintStyle: TextStyle(color: Colors.white),
                         ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextField(
-                          controller: todoController,
-                          minLines: 1,
-                          maxLines: 3,
-                          decoration: InputDecoration(
-                            hintText: '내용을 입력해 주세요',
-                            hintStyle: TextStyle(color: Colors.white)
-                            // labelText: '내용을 입력해 주세요', // hintText로 변경
-                            // labelStyle: TextStyle(
-                            //   color: Colors.white
-                            // )
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Positioned(
-                    left: 0,
-                    bottom: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (todoController.text.trim().isNotEmpty) {
-                            removeDialog();
-                          }else{
-                            Get.back();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFFF6B6B),
-                        ),
-                        child: Text('취소'),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 30, 30),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          addtodolist();
+                    SizedBox(
+                      height: 60,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: IconList.iconlist.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            color: selecticon == IconList.iconlist[index]
+                                ? Color(0xFF8BB8E8)
+                                : Color(0xFFFAF9F7),
+                            child: IconButton(
+                              style: IconButton.styleFrom(
+                                minimumSize: Size(60, 50),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  selecticon = IconList.iconlist[index];
+                                });
+                              },
+                              icon: Icon(
+                                IconList.iconlist[index],
+                                size: 40,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Text(
+                      selecticon == IconList.iconlist[0]
+                          ? '선택된 아이콘 :\n없음'
+                          : '선택된 아이콘 : ',
+                      textAlign: TextAlign.center,
+                    ),
+                    Icon(selecticon == IconList.iconlist[0] ? null : selecticon),
+                  ],
+                ),
+                Positioned(
+                  left: 0,
+                  bottom: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (todoController.text.trim().isNotEmpty) {
+                          removeDialog();
+                        } else {
                           Get.back();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF8BB8E8),
-                        ),
-                        child: Text('저장'),
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFFF6B6B),
                       ),
+                      child: Text('취소'),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 30, 30),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        addtodolist();
+                        Get.back();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF8BB8E8),
+                      ),
+                      child: Text('저장'),
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
-        child: Icon(
-          Icons.add,
-          size: 30,
-        ),
       ),
+    );
+  },
+  child: Icon(
+    Icons.add,
+    size: 30,
+  ),
+)
+
     );
   } //  build
 
@@ -228,7 +284,7 @@ class _MainscreenState extends State<Mainscreen> {
   addtodolist(){
     final text = todoController.text.trim();
     if (text.isNotEmpty){
-      TodoData.todolist.add(Todolist(todo: text, createdTime: DateTime.now()));
+      TodoData.todolist.add(Todolist(todo: text, selectedTime: DateTime.now(), icon: selecticon == IconList.iconlist[0]? null : selecticon));
       todoController.clear();
       Get.back();
       setState(() {});

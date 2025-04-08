@@ -1,6 +1,6 @@
 /*
-작성일: 2025.04.07 작성자: 이학현
-내용: 전역으로 관리할 todolist 생성, 메서드를 통해 리스트를 필터링, 삭제
+작성일 2025.04.07 작성자 이학현
+전역으로 관리할 todolist 생성, 메서드를 통해 리스트를 필터링, 삭제
 */
 import 'package:todolist_my_test_app/model/todo_frame.dart';
 

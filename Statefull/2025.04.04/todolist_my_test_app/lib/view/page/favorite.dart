@@ -1,6 +1,11 @@
+/*
+  작성일 2025.04.07 작성자 이학현
+  중요한 일 목록, mainscree(오늘 할 일)에서 별을 누르면 여기에 복사됨
+  내용 수정, 완료 체크 동기화
+*/
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todolist_my_test_app/model/drawer.dart';
+import 'package:todolist_my_test_app/widget/drawer.dart';
 import 'package:todolist_my_test_app/model/todo_data.dart';
 import 'package:todolist_my_test_app/view/page/tododetail.dart';
 
@@ -18,6 +23,7 @@ class _AddlistState extends State<Favorite> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('중요한 일'),
       ),
       drawer: mainDrawer(context, 'star'),
@@ -47,11 +53,10 @@ class _AddlistState extends State<Favorite> {
                   ),
                 ),
                 child: GestureDetector(
-                  onTap: () {
-                    Get.to(
-                      Tododetail(),
-                      arguments: index
-                    );
+                  onTap: () async {
+                    final result = await Get.to(() => Tododetail(), arguments: index);
+                    TodoData.todolist[index] =result;
+                    setState(() {});
                   },
                   child: Card(
                     child:
@@ -67,12 +72,15 @@ class _AddlistState extends State<Favorite> {
                           :Icon(Icons.circle_outlined),
                         ),
                         Icon(favos[index].icon),
-                        Text(
-                          favos[index].todo,
-                          style: TextStyle(
-                            decoration: favos[index].comple
-                            ? TextDecoration.lineThrough
-                            : null
+                        Expanded(
+                          child: Text(
+                            favos[index].todo,
+                            style: TextStyle(
+                              decoration: favos[index].comple
+                              ? TextDecoration.lineThrough
+                              : null
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         IconButton(

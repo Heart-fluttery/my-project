@@ -1,3 +1,7 @@
+/*
+  작성일 2025.04.04 작성자 이학현
+  todolist 모델 클래스
+*/
 import 'package:flutter/material.dart';
 
 class Todolist {
@@ -8,8 +12,8 @@ class Todolist {
   String todo; // 할일 내용
   bool trashmark; // 휴지통 여부
   bool bookmark; // 즐겨찾기 여부
-  DateTime createdTime; // 만든 시간
-
+  DateTime selectedTime; // 만든 시간
+  
   // Constructor
   Todolist(
     {
@@ -18,7 +22,7 @@ class Todolist {
       required this.todo,
       this.trashmark = false,
       this.bookmark = false,
-      required this.createdTime,
+      required this.selectedTime,
     }
   );
 }

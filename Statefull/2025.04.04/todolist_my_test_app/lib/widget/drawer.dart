@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_my_test_app/view/page/favorite.dart';
 import 'package:todolist_my_test_app/view/page/mainscreen.dart';
+import 'package:todolist_my_test_app/view/page/profile.dart';
 import 'package:todolist_my_test_app/view/page/remove.dart';
 Drawer mainDrawer(BuildContext context, String currentPage){
   return Drawer(
@@ -21,16 +22,27 @@ Drawer mainDrawer(BuildContext context, String currentPage){
               ),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage('images/201157139.jpeg'),
+                  GestureDetector(
+                    onTap: () {
+                      currentPage == 'profile';
+                      Get.off(Profile());
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('images/201157139.jpeg'),
+                      radius: 60,
+                    ),
                   ),
-                  Text('Heart-Fluttery'),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+                    child: Text('Heart-\nFluttery',
+                    textAlign: TextAlign.center,),
+                  ),
                 ],
               ),
             ),
             ListTile(
               leading: Icon(Icons.sunny),
-              title: Text('오늘 할 일'),
+              title: Text('To-do List'),
               selected: currentPage == 'todo',
               onTap: () {
                 if (currentPage != 'todo'){
