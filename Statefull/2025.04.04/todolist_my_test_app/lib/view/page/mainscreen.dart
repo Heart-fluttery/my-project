@@ -197,8 +197,8 @@ floatingActionButton: FloatingActionButton(
                     Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () async{
-                            await dispDatePicker();
+                          onPressed: () {
+                            dispDatePicker();
                           }, 
                           child: Text('날짜 선택하기'),
                         ),
