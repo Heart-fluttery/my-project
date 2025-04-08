@@ -3,6 +3,7 @@
   각 페이지 Get.page로 만들었다가 필요없는 것 같아서 주석처리
 */
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 // import 'package:todolist_my_test_app/view/page/favorite.dart';
 // import 'package:todolist_my_test_app/view/page/remove.dart';
@@ -20,6 +21,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),

@@ -71,7 +71,10 @@ class _AddlistState extends State<Favorite> {
                           ?Icon(Icons.check_circle_outline)
                           :Icon(Icons.circle_outlined),
                         ),
-                        Icon(favos[index].icon),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                          child: Icon(favos[index].icon),
+                        ),
                         Expanded(
                           child: Text(
                             favos[index].todo,

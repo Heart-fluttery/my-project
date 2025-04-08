@@ -24,12 +24,16 @@ class _MainscreenState extends State<Mainscreen> {
   // Property
   late TextEditingController todoController;
   late IconData selecticon;
+  late DateTime date;
+  late String selectDateText;
 
   @override
   void initState() {
     super.initState();
     todoController = TextEditingController();
     selecticon = IconList.iconlist[0];
+    date = DateTime.now();
+    selectDateText = "";
   }
 
   @override
@@ -97,7 +101,10 @@ class _MainscreenState extends State<Mainscreen> {
                           ?Icon(Icons.check_circle_outline)
                           :Icon(Icons.circle_outlined),
                         ),
-                        Icon(todos[index].icon),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                          child: Icon(todos[index].icon),
+                        ),
                         Expanded(
                           child: Text(
                             todos[index].todo,
@@ -160,6 +167,7 @@ floatingActionButton: FloatingActionButton(
                     ),
                     SizedBox(
                       height: 60,
+                      // 화면에 보이는 TodoList
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: IconList.iconlist.length,
@@ -186,13 +194,23 @@ floatingActionButton: FloatingActionButton(
                         },
                       ),
                     ),
-                    Text(
-                      selecticon == IconList.iconlist[0]
-                          ? '선택된 아이콘 :\n없음'
-                          : '선택된 아이콘 : ',
-                      textAlign: TextAlign.center,
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () async{
+                            await dispDatePicker();
+                          }, 
+                          child: Text('날짜 선택하기'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            selectDateText = "";
+                          }, 
+                          child: Text('날짜 초기화'),
+                        ),
+                      ],
                     ),
-                    Icon(selecticon == IconList.iconlist[0] ? null : selecticon),
+                    Text(selectDateText),
                   ],
                 ),
                 Positioned(
@@ -284,9 +302,24 @@ floatingActionButton: FloatingActionButton(
   addtodolist(){
     final text = todoController.text.trim();
     if (text.isNotEmpty){
-      TodoData.todolist.add(Todolist(todo: text, selectedTime: DateTime.now(), icon: selecticon == IconList.iconlist[0]? null : selecticon));
+      TodoData.todolist.add(Todolist(todo: text, selectedTime: selectDateText, icon: selecticon == IconList.iconlist[0]? null : selecticon));
       todoController.clear();
       Get.back();
+      setState(() {});
+    }
+  }
+  dispDatePicker() async{
+    int firstYear = date.year - 1;
+    int lastYear = firstYear + 5;
+    final selectedDate = await showDatePicker(
+      context: context, 
+      firstDate: DateTime(firstYear), 
+      lastDate: DateTime(lastYear),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      locale: Locale('ko', 'KR'),
+    );
+    if(selectedDate != null){
+      selectDateText = selectedDate.toString().substring(0, 10);
       setState(() {});
     }
   }

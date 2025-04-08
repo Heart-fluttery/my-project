@@ -90,7 +90,10 @@ class _RemoveState extends State<Remove> {
                         ?Icon(Icons.check_circle_outline)
                         :Icon(Icons.circle_outlined),
                       ),
-                      Icon(trash[index].icon),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: Icon(trash[index].icon),
+                      ),
                       Expanded(
                         child: Text(
                           trash[index].todo,
