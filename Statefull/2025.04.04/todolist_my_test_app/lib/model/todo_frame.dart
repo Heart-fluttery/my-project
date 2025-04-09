@@ -12,7 +12,7 @@ class Todolist {
   String todo; // 할일 내용
   bool trashmark; // 휴지통 여부
   bool bookmark; // 즐겨찾기 여부
-  String selectedTime; // 만든 시간
+  String selectedTime; // 선택한 날짜
   
   // Constructor
   Todolist(

@@ -34,6 +34,10 @@ class _TododetailState extends State<Tododetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text('일정 수정하기'),
+        actions: [
+          Image.asset('images/ratedit.gif')
+        ],
+        backgroundColor: Color(0xFFFAF9F7),
       ),
       body: Center(
         child: Column(
@@ -47,28 +51,45 @@ class _TododetailState extends State<Tododetail> {
             SizedBox(
               height: 60,
               child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: IconList.iconlist.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                color: editicon == IconList.iconlist[index]? Color(0xFF8BB8E8) : Color(0xFFFAF9F7),
-                                child: IconButton(
-                                  style: IconButton.styleFrom(
-                                    minimumSize: Size(60, 50),
-                                  ),
-                                  onPressed: () {
-                                    editicon = index == 0? null : IconList.iconlist[index];
-                                    setState(() {});
-                                  },
-                                  icon: Icon(
-                                    IconList.iconlist[index],
-                                    size: 40,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                scrollDirection: Axis.horizontal,
+                itemCount: IconList.iconlist.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    color: editicon == IconList.iconlist[index]? Color(0xFF8BB8E8) : Color(0xFFFAF9F7),
+                    child: IconButton(
+                      style: IconButton.styleFrom(
+                        minimumSize: Size(60, 50),
+                      ),
+                      onPressed: () {
+                        editicon = index == 0? null : IconList.iconlist[index];
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        IconList.iconlist[index],
+                        size: 40,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      dispDatePicker();
+                    }, 
+                    child: Text('날짜 선택하기'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      TodoData.todolist[value].selectedTime = "";
+                    }, 
+                    child: Text('날짜 초기화'),
+                  ),
+                ],
+              ),
+              Text(TodoData.todolist[value].selectedTime),
             Row(
               children: [
                 ElevatedButton(
@@ -98,4 +119,22 @@ class _TododetailState extends State<Tododetail> {
       ),
     );
   }
+
+    dispDatePicker() async{
+    DateTime date = DateTime.now();
+    int firstYear = date.year - 1;
+    int lastYear = firstYear + 5;
+    final selectedDate = await showDatePicker(
+      context: context, 
+      firstDate: DateTime(firstYear), 
+      lastDate: DateTime(lastYear),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      locale: Locale('ko', 'KR'),
+    );
+    if(selectedDate != null){
+      TodoData.todolist[value].selectedTime = selectedDate.toString().substring(0, 10);
+      setState(() {});
+    }
+  }
+
 }

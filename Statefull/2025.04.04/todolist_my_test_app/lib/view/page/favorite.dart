@@ -25,6 +25,10 @@ class _AddlistState extends State<Favorite> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('중요한 일'),
+        actions: [
+          Image.asset('images/ratedit.gif')
+        ],
+        backgroundColor: Color(0xFFFAF9F7),
       ),
       drawer: mainDrawer(context, 'star'),
       body: Center(
@@ -55,8 +59,10 @@ class _AddlistState extends State<Favorite> {
                 child: GestureDetector(
                   onTap: () async {
                     final result = await Get.to(() => Tododetail(), arguments: index);
+                    if (result != null) {
                     TodoData.todolist[index] =result;
                     setState(() {});
+                    }
                   },
                   child: Card(
                     child:
@@ -86,6 +92,7 @@ class _AddlistState extends State<Favorite> {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        Text(TodoData.todolist[index].selectedTime),
                         IconButton(
                           onPressed: () {
                             favos[index].bookmark = !favos[index].bookmark;

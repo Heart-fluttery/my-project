@@ -25,6 +25,10 @@ class _RemoveState extends State<Remove> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('휴지통'),
+        actions: [
+          Image.asset('images/ratedit.gif')
+        ],
+        backgroundColor: Color(0xFFFAF9F7),
       ),
       drawer: mainDrawer(context, 'trash'),
       body: Center(
@@ -105,6 +109,7 @@ class _RemoveState extends State<Remove> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      Text(TodoData.todolist[index].selectedTime),
                       IconButton(
                         onPressed: () {
                           // 휴지통에서 기능 비활성화

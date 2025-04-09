@@ -7,6 +7,7 @@
 */
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todolist_my_test_app/model/datecontroller.dart';
 import 'package:todolist_my_test_app/model/icon_list.dart';
 import 'package:todolist_my_test_app/widget/drawer.dart';
 import 'package:todolist_my_test_app/model/todo_data.dart';
@@ -27,6 +28,8 @@ class _MainscreenState extends State<Mainscreen> {
   late DateTime date;
   late String selectDateText;
 
+  final Datecontroller controller = Get.put(Datecontroller());
+
   @override
   void initState() {
     super.initState();
@@ -45,6 +48,9 @@ class _MainscreenState extends State<Mainscreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('To-do List'),
+        actions: [
+          Image.asset('images/ratedit.gif')
+        ],
         backgroundColor: Color(0xFFFAF9F7),
       ),
       body: Center(
@@ -116,6 +122,7 @@ class _MainscreenState extends State<Mainscreen> {
                             overflow: TextOverflow.ellipsis, // 텍스트가 길어질 때 잘리도록 처리
                           ),
                         ),
+                        Text(TodoData.todolist[index].selectedTime),
                         // 중요한 일 버튼
                         IconButton(
                           onPressed: () {
@@ -204,13 +211,15 @@ floatingActionButton: FloatingActionButton(
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            selectDateText = "";
+                            controller.resetDate();
                           }, 
                           child: Text('날짜 초기화'),
                         ),
                       ],
                     ),
-                    Text(selectDateText),
+                    Obx((){
+                      return Text(controller.selectDateText.value);
+                    })
                   ],
                 ),
                 Positioned(
@@ -320,7 +329,7 @@ floatingActionButton: FloatingActionButton(
     );
     if(selectedDate != null){
       selectDateText = selectedDate.toString().substring(0, 10);
-      setState(() {});
+      controller.setDate(selectDateText);
     }
   }
 } // class

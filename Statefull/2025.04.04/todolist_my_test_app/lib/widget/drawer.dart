@@ -6,6 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todolist_my_test_app/model/user_data.dart';
 import 'package:todolist_my_test_app/view/page/favorite.dart';
 import 'package:todolist_my_test_app/view/page/mainscreen.dart';
 import 'package:todolist_my_test_app/view/page/profile.dart';
@@ -28,14 +29,21 @@ Drawer mainDrawer(BuildContext context, String currentPage){
                       Get.off(Profile());
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('images/201157139.jpeg'),
+                      backgroundImage: AssetImage(Userdata.imagePath),
                       radius: 60,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
-                    child: Text('Heart-\nFluttery',
-                    textAlign: TextAlign.center,),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Expanded(
+                      child: SizedBox(
+                        width: 130,
+                        child: Text(Userdata.nickName,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.clip,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
