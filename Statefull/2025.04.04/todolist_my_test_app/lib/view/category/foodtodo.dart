@@ -1,51 +1,62 @@
 /*
-  작성일 2025.04.07 작성자 이학현
-  중요한 일 목록, mainscree(오늘 할 일)에서 별을 누르면 여기에 복사됨
-  내용 수정, 완료 체크 동기화
+  작성일 2025.04.09 작성자 이학현
+  식사 일정 필터 페이지
 */
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todolist_my_test_app/model/user_data.dart';
 import 'package:todolist_my_test_app/widget/drawer.dart';
 import 'package:todolist_my_test_app/model/todo_data.dart';
 import 'package:todolist_my_test_app/view/page/tododetail.dart';
 
-class Favorite extends StatefulWidget {
-  const Favorite({super.key});
+class Foodtodo extends StatefulWidget {
+  const Foodtodo({super.key});
 
   @override
-  State<Favorite> createState() => _AddlistState();
+  State<Foodtodo> createState() => _AddlistState();
 }
 
-class _AddlistState extends State<Favorite> {
+class _AddlistState extends State<Foodtodo> {
   @override
   Widget build(BuildContext context) {
-    final favos = TodoData.favoriteTodo;
+    final food = TodoData.foodTodo;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('중요한 일'),
+        title: Text('식사 일정',
+        style: TextStyle(
+          color: Color(0xFF3F3F3F)
+        ),),
         actions: [
-          Image.asset('images/ratedit.gif')
+          GestureDetector(
+            onTap: () {
+              Userdata.ratChange = !Userdata.ratChange;
+              setState(() {});
+            },
+            child: Image.asset(
+              Userdata.ratChange? 'images/ratedit.gif' : 'images/ratedit_out2.gif',
+            ),
+          ),
         ],
-        backgroundColor: Color(0xFFFAF9F7),
+        backgroundColor: Color(0xFFD7C0E6),
       ),
-      drawer: mainDrawer(context, 'star'),
+      drawer: mainDrawer(context, 'food'),
       body: Center(
-        child: favos.isEmpty
+        child: food.isEmpty
         ? Text(
-          '할 일 목록에서\n별을 눌러\n중요한 일을\n체크해 보세요\n\n',
+          '식사 일정이\n없습니다\n\n',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF5D5D5D)),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xA63F3F3F)),
           )
           : ListView.builder(
-            itemCount: favos.length,
+            itemCount: food.length,
             itemBuilder: (context, index) {
               return Dismissible(
                 direction: DismissDirection.endToStart,
-                key: ValueKey(favos[index]),
+                key: ValueKey(food[index]),
                 onDismissed: (direction) {
-                  favos[index].trashmark = true;
+                  food[index].trashmark = true;
                   setState(() {});
                 },
                 background: Container(
@@ -65,27 +76,28 @@ class _AddlistState extends State<Favorite> {
                     }
                   },
                   child: Card(
+                    color: food[index].comple == true? Color(0xFFB8B8B8) : Color(0xFFD7C0E6),
                     child:
                     Row(
                       children: [
                         IconButton(
                           onPressed: () {
-                            favos[index].comple = !favos[index].comple;
+                            food[index].comple = !food[index].comple;
                             setState(() {});
                           }, 
-                          icon: favos[index].comple
+                          icon: food[index].comple
                           ?Icon(Icons.check_circle_outline)
                           :Icon(Icons.circle_outlined),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                          child: Icon(favos[index].icon),
+                          child: Icon(food[index].icon),
                         ),
                         Expanded(
                           child: Text(
-                            favos[index].todo,
+                            food[index].todo,
                             style: TextStyle(
-                              decoration: favos[index].comple
+                              decoration: food[index].comple
                               ? TextDecoration.lineThrough
                               : null
                             ),
@@ -95,10 +107,10 @@ class _AddlistState extends State<Favorite> {
                         Text(TodoData.todolist[index].selectedTime),
                         IconButton(
                           onPressed: () {
-                            favos[index].bookmark = !favos[index].bookmark;
+                            food[index].bookmark = !food[index].bookmark;
                             setState(() {});
                           }, 
-                          icon: favos[index].bookmark
+                          icon: food[index].bookmark
                           ?Icon(Icons.star)
                           :Icon(Icons.star_border_outlined),
                         ),

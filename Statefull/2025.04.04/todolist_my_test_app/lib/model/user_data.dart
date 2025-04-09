@@ -9,4 +9,6 @@ class Userdata {
   static List<Userframe>  idpw= [Userframe(userid: 'qwer', userpw: '1234')];
   static String nickName = 'Heart-Fluttery';
   static String imagePath = "images/201157139.jpeg";
+  static bool ratChange = true;
+  static int buttonColor = 3;
 }

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_my_test_app/model/datecontroller.dart';
 import 'package:todolist_my_test_app/model/icon_list.dart';
+import 'package:todolist_my_test_app/model/user_data.dart';
 import 'package:todolist_my_test_app/widget/drawer.dart';
 import 'package:todolist_my_test_app/model/todo_data.dart';
 import 'package:todolist_my_test_app/model/todo_frame.dart';
@@ -47,18 +48,36 @@ class _MainscreenState extends State<Mainscreen> {
       backgroundColor: Color(0xFFFAF9F7),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('To-do List'),
+        title: Text('To-do List',
+        style: TextStyle(
+          color: Color(0xFF3F3F3F)
+        ),),
         actions: [
-          Image.asset('images/ratedit.gif')
+          GestureDetector(
+            onTap: () {
+              Userdata.ratChange = !Userdata.ratChange;
+              setState(() {});
+            },
+            child: Image.asset(
+              Userdata.ratChange? 'images/ratedit.gif' : 'images/ratedit_out2.gif',
+            ),
+          ),
+          // IconButton(
+          //   onPressed: () {
+          //     Userdata.ratChange = !Userdata.ratChange;
+          //     setState(() {});
+          //   }, 
+          //   icon: Image.asset(Userdata.ratChange? 'images/ratedit.gif' : 'images/ratedit_out2.gif'),
+          // ),
         ],
-        backgroundColor: Color(0xFFFAF9F7),
+        backgroundColor: Color(0xFFD7C0E6),
       ),
       body: Center(
         child: todos.isEmpty
         ? Text(
           '아래 버튼을\n눌러\n할 일을 추가해\n보세요\n\n',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF5D5D5D)),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xA63F3F3F)),
           )
           : ListView.builder(
             itemCount: todos.length,
@@ -94,6 +113,7 @@ class _MainscreenState extends State<Mainscreen> {
                     // );
                   },
                   child: Card(
+                    color: todos[index].comple == true? Color(0xFFB8B8B8) : Color(0xFFD7C0E6),
                     child:
                     Row(
                       children: [
@@ -156,9 +176,12 @@ floatingActionButton: FloatingActionButton(
               children: [
                 Column(
                   children: [
-                    Text(
-                      '할 일 추가하기',
-                      style: TextStyle(fontSize: 20),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Text(
+                        '할 일 추가하기',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
@@ -168,57 +191,70 @@ floatingActionButton: FloatingActionButton(
                         maxLines: 3,
                         decoration: InputDecoration(
                           hintText: '내용을 입력해 주세요',
-                          hintStyle: TextStyle(color: Colors.white),
+                          hintStyle: TextStyle(color: Color(0xA63F3F3F)),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 60,
-                      // 화면에 보이는 TodoList
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: IconList.iconlist.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            color: selecticon == IconList.iconlist[index]
-                                ? Color(0xFF8BB8E8)
-                                : Color(0xFFFAF9F7),
-                            child: IconButton(
-                              style: IconButton.styleFrom(
-                                minimumSize: Size(60, 50),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SizedBox(
+                        height: 60,
+                        // 화면에 보이는 TodoList
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: IconList.iconlist.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              color: selecticon == IconList.iconlist[index]
+                                  ? Color(0xFF8BB8E8)
+                                  : Color(0xFFFAF9F7),
+                              child: IconButton(
+                                style: IconButton.styleFrom(
+                                  minimumSize: Size(60, 50),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    selecticon = IconList.iconlist[index];
+                                  });
+                                },
+                                icon: Icon(
+                                  IconList.iconlist[index],
+                                  size: 40,
+                                ),
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  selecticon = IconList.iconlist[index];
-                                });
-                              },
-                              icon: Icon(
-                                IconList.iconlist[index],
-                                size: 40,
-                              ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton(
                           onPressed: () {
                             dispDatePicker();
                           }, 
-                          child: Text('날짜 선택하기'),
+                          child: Text('날짜 선택하기',
+                          style: TextStyle(
+                            color: Color(0xFF3F3F3F)
+                          ),),
                         ),
                         ElevatedButton(
                           onPressed: () {
                             controller.resetDate();
                           }, 
-                          child: Text('날짜 초기화'),
+                          child: Text('날짜 초기화',
+                          style: TextStyle(
+                            color: Color(0xFF3F3F3F)
+                          ),),
                         ),
                       ],
                     ),
                     Obx((){
-                      return Text(controller.selectDateText.value);
+                      return Text(controller.selectDateText.value,
+                      style: TextStyle(
+                        color: Color(0xFF3F3F3F)
+                      ),);
                     })
                   ],
                 ),
@@ -229,6 +265,8 @@ floatingActionButton: FloatingActionButton(
                     padding: const EdgeInsets.fromLTRB(30, 0, 0, 30),
                     child: ElevatedButton(
                       onPressed: () {
+                        controller.resetDate();
+                        selecticon = IconList.iconlist[0];
                         if (todoController.text.trim().isNotEmpty) {
                           removeDialog();
                         } else {
@@ -238,7 +276,10 @@ floatingActionButton: FloatingActionButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFFF6B6B),
                       ),
-                      child: Text('취소'),
+                      child: Text('취소',
+                          style: TextStyle(
+                            color: Color(0xFFFAF9F7)
+                          ),),
                     ),
                   ),
                 ),
@@ -249,13 +290,18 @@ floatingActionButton: FloatingActionButton(
                     padding: const EdgeInsets.fromLTRB(0, 0, 30, 30),
                     child: ElevatedButton(
                       onPressed: () {
+                        controller.resetDate();
                         addtodolist();
+                        selecticon = IconList.iconlist[0];
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF8BB8E8),
                       ),
-                      child: Text('저장'),
+                      child: Text('저장',
+                          style: TextStyle(
+                            color: Color(0xFF3F3F3F)
+                          ),),
                     ),
                   ),
                 ),

@@ -7,10 +7,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todolist_my_test_app/model/user_data.dart';
-import 'package:todolist_my_test_app/view/page/favorite.dart';
+import 'package:todolist_my_test_app/view/category/accesstodo.dart';
+import 'package:todolist_my_test_app/view/category/favorite.dart';
+import 'package:todolist_my_test_app/view/category/foodtodo.dart';
+import 'package:todolist_my_test_app/view/category/healthtodo.dart';
+import 'package:todolist_my_test_app/view/category/pettodo.dart';
+import 'package:todolist_my_test_app/view/category/studytodo.dart';
 import 'package:todolist_my_test_app/view/page/mainscreen.dart';
 import 'package:todolist_my_test_app/view/page/profile.dart';
-import 'package:todolist_my_test_app/view/page/remove.dart';
+import 'package:todolist_my_test_app/view/category/remove.dart';
 Drawer mainDrawer(BuildContext context, String currentPage){
   return Drawer(
         backgroundColor: Color(0xFFD7C0E6),
@@ -69,6 +74,71 @@ Drawer mainDrawer(BuildContext context, String currentPage){
                 if (currentPage != 'star'){
                   Get.back();
                   Get.off(Favorite());
+                }else{
+                  Get.back();
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.access_time),
+              title: Text('약속 일정'),
+              selected: currentPage == 'access',
+              onTap: () {
+                if (currentPage != 'access'){
+                  Get.back();
+                  Get.off(Accesstodo());
+                }else{
+                  Get.back();
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.edit),
+              title: Text('공부 일정'),
+              selected: currentPage == 'study',
+              onTap: () {
+                if (currentPage != 'study'){
+                  Get.back();
+                  Get.off(Studytodo());
+                }else{
+                  Get.back();
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.run_circle_outlined),
+              title: Text('운동 일정'),
+              selected: currentPage == 'health',
+              onTap: () {
+                if (currentPage != 'health'){
+                  Get.back();
+                  Get.off(Healthtodo());
+                }else{
+                  Get.back();
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.food_bank_outlined),
+              title: Text('식사 일정'),
+              selected: currentPage == 'food',
+              onTap: () {
+                if (currentPage != 'food'){
+                  Get.back();
+                  Get.off(Foodtodo());
+                }else{
+                  Get.back();
+                }
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.pets),
+              title: Text('반려동물 일정'),
+              selected: currentPage == 'pet',
+              onTap: () {
+                if (currentPage != 'pet'){
+                  Get.back();
+                  Get.off(Pettodo());
                 }else{
                   Get.back();
                 }

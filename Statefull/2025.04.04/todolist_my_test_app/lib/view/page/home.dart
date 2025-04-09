@@ -31,63 +31,65 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFAF9F7),
       appBar: AppBar(
-        toolbarHeight: 300,
-        title: CircleAvatar(
-          radius: 100,
-          backgroundColor: Colors.blueAccent,
-          child: Icon(
-            Icons.person,
-            color: Colors.white,
-            size: 150,
-          ),
+        toolbarHeight: 350,
+        backgroundColor: Color(0xFFD7C0E6),
+        title: Image.asset('images/image (1).png',
+        height: 300,
         ),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // CircleAvatar( // appbar로 이동
-              //   radius: 100,
-              //   backgroundColor: Colors.blueAccent,
-              //   child: Icon(
-              //     Icons.person,
-              //     color: Colors.white,
-              //     size: 150,
-              //   ),
-              // ),
-              TextField(
-                controller: idcontroller,
-                maxLines: 1,
-                maxLength: 40,
-                decoration: InputDecoration(
-                  hintText: '아이디를 입력해 주세요',
-                  hintStyle: TextStyle(
-                    color: Colors.grey
+        child: Padding(
+          padding: const EdgeInsets.all(100.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // CircleAvatar( // appbar로 이동
+                //   radius: 100,
+                //   backgroundColor: Colors.blueAccent,
+                //   child: Icon(
+                //     Icons.person,
+                //     color: Colors.white,
+                //     size: 150,
+                //   ),
+                // ),
+                TextField(
+                  controller: idcontroller,
+                  maxLines: 1,
+                  maxLength: 40,
+                  decoration: InputDecoration(
+                    hintText: '아이디를 입력해 주세요',
+                    hintStyle: TextStyle(
+                      color: Color(0xA63F3F3F)
+                    ),
                   ),
                 ),
-              ),
-              TextField(
-                controller: pwcontroller,
-                obscureText: true,
-                maxLines: 1,
-                maxLength: 40,
-                decoration: InputDecoration(
-                  hintText: '비밀번호를 입력해 주세요',
-                  hintStyle: TextStyle(
-                    color: Colors.grey
+                TextField(
+                  controller: pwcontroller,
+                  obscureText: true,
+                  maxLines: 1,
+                  maxLength: 40,
+                  decoration: InputDecoration(
+                    hintText: '비밀번호를 입력해 주세요',
+                    hintStyle: TextStyle(
+                      color: Color(0xA63F3F3F)
+                    ),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  idpwCheck();
-                }, 
-                child: Text('Log In'),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    idpwCheck();
+                  }, 
+                  child: Text('Log In',
+                  style: TextStyle(
+                    color: Color(0xFF3F3F3F)
+                  ),),
+                ),
+              ],
+            ),
           ),
         ),
       ),

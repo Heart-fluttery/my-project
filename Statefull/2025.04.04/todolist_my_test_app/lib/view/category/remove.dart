@@ -6,6 +6,7 @@
   휴지통 복원 기능, 좌우 스와이프 디자인 추가
 */
 import 'package:flutter/material.dart';
+import 'package:todolist_my_test_app/model/user_data.dart';
 import 'package:todolist_my_test_app/widget/drawer.dart';
 import 'package:todolist_my_test_app/model/todo_data.dart';
 
@@ -22,13 +23,25 @@ class _RemoveState extends State<Remove> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFAF9F7),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('휴지통'),
+        title: Text('휴지통',
+        style: TextStyle(
+          color: Color(0xFF3F3F3F)
+        ),),
         actions: [
-          Image.asset('images/ratedit.gif')
+          GestureDetector(
+            onTap: () {
+              Userdata.ratChange = !Userdata.ratChange;
+              setState(() {});
+            },
+            child: Image.asset(
+              Userdata.ratChange? 'images/ratedit.gif' : 'images/ratedit_out2.gif',
+            ),
+          ),
         ],
-        backgroundColor: Color(0xFFFAF9F7),
+        backgroundColor: Color(0xFFD7C0E6),
       ),
       drawer: mainDrawer(context, 'trash'),
       body: Center(
@@ -36,7 +49,7 @@ class _RemoveState extends State<Remove> {
         ? Text(
           '휴지통이\n비어있습니다\n\n',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xFF5D5D5D)),
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xA63F3F3F)),
           )
           : ListView.builder(
             itemCount: trash.length,
@@ -46,7 +59,6 @@ class _RemoveState extends State<Remove> {
                 direction: DismissDirection.horizontal,
                 key: ValueKey(item.todo),
                 onDismissed: (direction) {
-                  setState(() {});
                   if (direction == DismissDirection.endToStart){
                   TodoData.deleteForever(item);
                   // TodoData.todolist.remove(item);
@@ -81,6 +93,7 @@ class _RemoveState extends State<Remove> {
                   ),
                 ),
                 child: Card(
+                    color: trash[index].comple == true? Color(0xFFB8B8B8) : Color(0xFFD7C0E6),
                   child:
                   Row(
                     children: [
