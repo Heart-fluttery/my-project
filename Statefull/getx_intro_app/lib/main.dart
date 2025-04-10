@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp( // pubspec 바꿔도 이 부분을 바꿔야 Get 쓸 수 있음
       title: 'Flutter Demo',
-      localizationsDelegates: [ // Delegat 권한 대행
+      localizationsDelegates: [ // Delegat 권한 대행 
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
       GlobalCupertinoLocalizations.delegate,

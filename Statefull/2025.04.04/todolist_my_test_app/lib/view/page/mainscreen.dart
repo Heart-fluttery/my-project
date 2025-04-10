@@ -290,10 +290,15 @@ floatingActionButton: FloatingActionButton(
                     padding: const EdgeInsets.fromLTRB(0, 0, 30, 30),
                     child: ElevatedButton(
                       onPressed: () {
+                        if(todoController.text.trim().isNotEmpty){
                         controller.resetDate();
                         addtodolist();
                         selecticon = IconList.iconlist[0];
                         Get.back();
+                        }else{
+                          Get.snackbar('저장 할 수 없습니다', '내용을 입력해 주세요',
+                          backgroundColor: Color(0xFFFF6B6B));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF8BB8E8),
@@ -310,6 +315,7 @@ floatingActionButton: FloatingActionButton(
           );
         },
       ),
+      isScrollControlled: true,
     );
   },
   child: Icon(
@@ -333,20 +339,33 @@ floatingActionButton: FloatingActionButton(
           Text('내용을 삭제하시겠습니까?',
           style: TextStyle(fontSize: 17),),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFD7C0E6),
+                ),
                 onPressed: () {
                   Get.back();
                 },
-                child: Text('취소'),
+                child: Text('취소',
+                style: TextStyle(
+                  color: Color(0xFF3F3F3F),
+                ),),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFFF6B6B),
+                ),
                 onPressed: () {
                   todoController.clear();
                   Get.back();
                   Get.back();
                 },
-                child: Text('삭제'),
+                child: Text('삭제',
+                style: TextStyle(
+                  color: Colors.white
+                ),),
               ),
             ],
           ),
