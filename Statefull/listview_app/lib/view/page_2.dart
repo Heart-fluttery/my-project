@@ -3,7 +3,8 @@ import 'package:listview_app/model/model.dart';
 
 class Page2 extends StatefulWidget {
   final List<AnimalList> list;
-  const Page2({super.key, required this.list});
+  final List<Color> borderColor;
+  const Page2({super.key, required this.list, required this.borderColor});
 
   @override
   State<Page2> createState() => _Page2State();
@@ -31,12 +32,12 @@ class _Page2State extends State<Page2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Add List'),
-        backgroundColor: Colors.amberAccent,
-        foregroundColor: Colors.white,
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Add List'),
+      //   backgroundColor: Colors.amberAccent,
+      //   foregroundColor: Colors.white,
+      //   centerTitle: true,
+      // ),
       body: Center(
         child: Column(
           children: [
@@ -85,100 +86,126 @@ class _Page2State extends State<Page2> {
             ),
             SizedBox(
               height: 100,
-              child: ListView(
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/cow.png';
-                      imageName = '젖소';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/cow.png',
-                      width: 80,
+                itemCount: widget.list.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => rebuildBorder(index),
+                    child: Container(
+                      height: 100,
+                      width: 100,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: widget.borderColor[index],
+                          width: 2,
+                        )
+                      ),
+                      child: Image.asset(
+                        widget.list[index].imagePath
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/pig.png';
-                      imageName = '돼지';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/pig.png',
-                      width: 80,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/bee.png';
-                      imageName = '벌';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/bee.png',
-                      width: 80,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/fox.png';
-                      imageName = '여우';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/fox.png',
-                      width: 80,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/monkey.png';
-                      imageName = '원숭이';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/monkey.png',
-                      width: 80,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/cat.png';
-                      imageName = '고양이';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/cat.png',
-                      width: 80,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/dog.png';
-                      imageName = '개';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/dog.png',
-                      width: 80,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      imagePath = 'images/wolf.png';
-                      imageName = '늑대';
-                      setState(() {});
-                    },
-                    child: Image.asset(
-                      'images/wolf.png',
-                      width: 80,
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
+            // SizedBox(
+            //   height: 100,
+            //   child: ListView(
+            //     scrollDirection: Axis.horizontal,
+            //     children: [
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/cow.png';
+            //           imageName = '젖소';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/cow.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/pig.png';
+            //           imageName = '돼지';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/pig.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/bee.png';
+            //           imageName = '벌';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/bee.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/fox.png';
+            //           imageName = '여우';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/fox.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/monkey.png';
+            //           imageName = '원숭이';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/monkey.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/cat.png';
+            //           imageName = '고양이';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/cat.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/dog.png';
+            //           imageName = '개';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/dog.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //       GestureDetector(
+            //         onTap: () {
+            //           imagePath = 'images/wolf.png';
+            //           imageName = '늑대';
+            //           setState(() {});
+            //         },
+            //         child: Image.asset(
+            //           'images/wolf.png',
+            //           width: 80,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Text(imageName),
             ElevatedButton(
               onPressed: () =>  _showDialog(),
@@ -252,5 +279,13 @@ class _Page2State extends State<Page2> {
       returnValue = "포유류";
     }
     return returnValue;
+  } // build
+
+  rebuildBorder(int index){
+    for (int i=0; i<widget.list.length; i++){
+      widget.borderColor[i] = Colors.black;
+    }
+    widget.borderColor[index] = Colors.redAccent;
+    setState(() {});
   }
 } // Class

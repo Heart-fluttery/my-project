@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:listview_app/home.dart';
 import 'package:listview_app/id.dart';
 
 void main() {
@@ -20,8 +21,9 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/id' : (context) => Id(),
+        '/' : (context) => Home(),
       },
-      initialRoute: '/id',
+      initialRoute: '/',
     );
   }
 }

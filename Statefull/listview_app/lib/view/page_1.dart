@@ -39,12 +39,12 @@ class _Page1State extends State<Page1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Listview Test'),
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.blueAccent,
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Listview Test'),
+      //   foregroundColor: Colors.white,
+      //   backgroundColor: Colors.blueAccent,
+      //   centerTitle: true,
+      // ),
       body: ListView.builder(
         itemCount: widget.list.length,
         itemBuilder: (context, index) {

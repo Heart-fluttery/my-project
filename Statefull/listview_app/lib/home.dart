@@ -17,6 +17,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   // Property
   late TabController controller; // 하단 탭바
   late List<AnimalList> animalList; // 동물 정보, 원래 page_1에서 지정했는데
+  late List<Color> animalColor; // 동물 테두리 색
   // 탭바에서 변수를 지정해서 연결된 클래스에서 쓸 수 있게 함
 
   @override
@@ -25,6 +26,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     controller = TabController(length: 2, vsync: this);
     animalList = [];
     addData();
+    animalColor = [
+      Colors.black,
+      Colors.black,
+      Colors.black,
+      Colors.black,
+      Colors.black,
+      Colors.black,
+      Colors.black,
+      Colors.black,
+    ];
   }
 
   addData(){
@@ -45,22 +56,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar( // Tabbar 구성이라 appBar 필요없는데 넣어버림
-      //   title: Text('Listview Test'),
-      //   backgroundColor: Colors.blueAccent,
-      //   foregroundColor: Colors.white,
-      //   centerTitle: true,
-      // ),
-      body: TabBarView(
-        controller: controller,
-        children: [
-          Page1(list: animalList,),
-          Page2(list: animalList,),
-        ],
-      ),
-      bottomNavigationBar: Container(
-        color: Colors.amberAccent,
-        child: TabBar(
+      appBar: AppBar( // Tabbar 구성이라 appBar 필요없는데 넣어버림
+        title: Text('Listview Test'),
+        backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        bottom: TabBar(
           controller: controller,
           labelColor: Colors.blueAccent,
           unselectedLabelColor: Colors.redAccent,
@@ -79,6 +80,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           ],
         ),
       ),
+      body: TabBarView(
+        controller: controller,
+        children: [
+          Page1(list: animalList,),
+          Page2(list: animalList, borderColor: animalColor,),
+        ],
+      ),
+      // bottomNavigationBar: Container(
+      //   color: Colors.amberAccent,
+      //   child: TabBar(
+      //     controller: controller,
+      //     labelColor: Colors.blueAccent,
+      //     unselectedLabelColor: Colors.redAccent,
+      //     indicatorColor: Colors.redAccent,
+      //     tabs: [
+      //       Tab(
+      //         icon: Icon(
+      //           Icons.looks_one,
+      //         ),
+      //       ),
+      //       Tab(
+      //         icon: Icon(
+      //           Icons.looks_two,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

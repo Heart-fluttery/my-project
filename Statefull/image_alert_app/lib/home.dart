@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -97,44 +99,41 @@ class _HomeState extends State<Home> {
 
     // ---- Functions ----
   _showDialog(BuildContext context, bool value){
-    if (imageState == value) { // 전구 상태와 버튼 값이 같은 경우
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context){
-        return AlertDialog(
-          title: Text('경고'),
-          content: Text('현재 램프가 ${value == true? '켜진' : '꺼진'} 상태입니다.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.redAccent
-              ),
-              child: Text("네, 알겠습니다",
-              style: TextStyle(
-                color: Colors.white
-              ),),
-            ),
-          ],
-        );
-      }
+    if (imageState != value) { // 전구 상태와 버튼 값 다른 경우
+    showCupertinoModalPopup(context: 
+      context, 
+      builder: (context) => CupertinoActionSheet(
+        title: Text('램프끄기'),
+        message: Text('램프를 끄시겠습니까?'),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: () {
+              imageName = 'images/lamp_off.png';
+              imageState = false;
+              setState(() {});
+            }, 
+            child: Text('예'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () => Get.back(), 
+            child: Text('아니오'),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () => Get.back(),
+          child: Text('Cancle'),
+        ),
+      ),
     );
-    }else{ // imageState(전구 상태)와 value(버튼 값)이 다른 경우
-      showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context){
-        return AlertDialog(
-          title: Text('램프 ${value == true? '켜기' : '끄기'}'),
+    }else{ // 전구 상태와 버튼 값 같은 경우
+      Get.defaultDialog(
+          title: "램프 ${value != true? '켜기' : '끄기'}",
           // value(버튼값)이 ture 일 때 전구는 꺼져있음
-          content: Text('램프를 ${value == true? '켜' : '끄'}시겠습니까?'),
+          content: Text('램프를 ${value != true? '켜' : '끄'}시겠습니까?'),
           actions: [
             TextButton(
               onPressed: () {
-                imageState = value == true? true : false;
+                imageState = value != true? true : false;
                 Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(
@@ -160,8 +159,6 @@ class _HomeState extends State<Home> {
           ],
         );
       }
-    );
-    }
     setState(() {});
-  }
-} // class
+    }
+  }// class
