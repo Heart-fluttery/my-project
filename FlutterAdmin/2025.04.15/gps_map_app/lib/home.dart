@@ -149,7 +149,35 @@ class _HomeState extends State<Home> {
       children: [
         TileLayer( // 큰 이미지를 쪼개서 빠른 것부터 보여줌
           urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
-        )
+        ),
+        MarkerLayer(
+          markers: [
+            Marker(
+              width: 80,
+              height: 80,
+              point: latlng.LatLng(latData, longData), 
+              child: Column(
+                children: [
+                  SizedBox(
+                    child: Text(
+                      location[kindChoice],
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.pin_drop,
+                    size: 50,
+                    color: Colors.red,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
