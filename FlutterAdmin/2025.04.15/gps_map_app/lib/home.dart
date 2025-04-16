@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart' as latlng;
+/*
+패키지는 여러 사람이 만들어서 클래스 이름이 겹치는 경우가 많음
+그래서 as(알리아스?)로 클래스 이름을 임의로 지정
+*/
 
 class Home extends StatefulWidget {
   const Home({super.key});
