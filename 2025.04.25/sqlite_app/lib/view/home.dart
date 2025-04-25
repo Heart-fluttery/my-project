@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:sqlite_app/view/insert_students.dart';
 import 'package:sqlite_app/view/update_students.dart';
@@ -45,62 +46,79 @@ class _HomeState extends State<Home> {
                     ]
                     )!.then((value) => reloadData());
                   },
-                  child: Card(
-                    child: Column(
+                  child: Slidable(
+                    endActionPane: ActionPane(
+                      motion: BehindMotion(), 
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Code : ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            Text(
-                              snapshot.data![index].code
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Name : ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            Text(
-                              snapshot.data![index].name
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Dept : ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            Text(
-                              snapshot.data![index].dept
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Phone : ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            Text(
-                              snapshot.data![index].phone
-                            ),
-                          ],
+                        SlidableAction(
+                          backgroundColor: Colors.red,
+                          icon: Icons.delete,
+                          label: '삭제',
+                          onPressed: (context) async{
+                            await handler.deleteStudents(snapshot.data![index].id!);
+                            snapshot.data!.remove(snapshot.data![index]);
+                            setState(() {});
+                          },
                         ),
                       ],
+                    ),
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Code : ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Text(
+                                snapshot.data![index].code
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Name : ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Text(
+                                snapshot.data![index].name
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Dept : ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Text(
+                                snapshot.data![index].dept
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Phone : ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              Text(
+                                snapshot.data![index].phone
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

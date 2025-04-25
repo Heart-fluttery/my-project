@@ -40,4 +40,11 @@ class DatabaseHandler {
     print("update return value : $result");
     return result;
     }
+
+    Future<void> deleteStudents(int id) async{
+      final Database db = await initializeDB();
+      await db.rawDelete('delete from students where id = ?',
+            [id]
+    );
+    }
 }
