@@ -16,6 +16,7 @@ class EatPlace {
   late int score; // 평점 5점만점 별 아이콘으로 만들 예정
   late String review; // 손님 평가
   late Uint8List image; // 가게 혹은 음식 이미지
+  late int favorite; // 즐겨찾기
 
   // Constructor
   EatPlace(
@@ -28,6 +29,7 @@ class EatPlace {
       required this.score,
       required this.review,
       required this.image,
+      required this.favorite
     }
   );
 
@@ -40,5 +42,6 @@ class EatPlace {
     tel = res['tel'],
     score = res['score'],
     review = res['review'],
-    image = res['image'];
+    image = res['image'],
+    favorite = res['favorite'];
 }

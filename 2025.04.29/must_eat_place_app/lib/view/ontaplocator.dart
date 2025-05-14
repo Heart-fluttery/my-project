@@ -1,23 +1,18 @@
-/*
-2025.04.29 이학현
-먼저 GPS로 현재 위치 잡기
-*/
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:latlong2/latlong.dart' as latlng;
 import 'package:must_eat_place_app/vm/database_handler.dart';
+import 'package:latlong2/latlong.dart' as latlng;
 
-class Locator extends StatefulWidget {
-  final bool isEditMode; // 위치 추가인지 수정인지 구분
-  const Locator({super.key, required this.isEditMode});
+class Ontaplocator extends StatefulWidget {
+  const Ontaplocator({super.key});
 
   @override
-  State<Locator> createState() => _LocatorState();
+  State<Ontaplocator> createState() => _OntaplocatorState();
 }
 
-class _LocatorState extends State<Locator> {
+class _OntaplocatorState extends State<Ontaplocator> {
   // Property
   late DatabaseHandler handler;
   late Position currentPosition; // 현재 위치
@@ -35,18 +30,10 @@ class _LocatorState extends State<Locator> {
     mapController = MapController();
     canRun = false;
     
-
-    // 수정 모드일 경우 기존 위치
-    if (widget.isEditMode){
-      // 수정 페이지에서 넘어올 때 기존 위치 get argument로 받기
       latData = value[0];
       longData = value[1];
       canRun = true;
       setState(() {});
-    }else{ // 아닌 경우 현재 위치
-    checkLocationPermission();
-    }
-
   }
 
   checkLocationPermission() async {
@@ -95,26 +82,6 @@ class _LocatorState extends State<Locator> {
       appBar: AppBar(
         title: Text('맛집 위치'),
         centerTitle: true,
-        leading: TextButton(
-          onPressed: () {
-            Get.back();
-            setState(() {
-              
-            });
-          } ,
-          child: Text('취소'),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.back(result: {
-                'lat':latData, 
-                'long':longData,
-                });
-            }, 
-            child: Text('저장'),
-          ),
-        ],
       ),
       body: canRun
       ? flutterMap()
@@ -143,33 +110,6 @@ class _LocatorState extends State<Locator> {
         ),
 MarkerLayer(
   markers: [
-    if (widget.isEditMode) 
-      // if 블록에서 여러 Marker를 감싸기 위해 List로 묶기
-      ...[
-        Marker(
-          width: 80,
-          height: 80,
-          point: latlng.LatLng(latData, longData), // 핀 위치
-          child: Column(
-            children: [
-              SizedBox(
-                child: Text(
-                  '가게 위치',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.edit_location_alt,
-                size: 50,
-                color: Colors.blue,
-              ),
-            ],
-          ),
-        ),
         Marker(
           width: 80,
           height: 80,
@@ -178,7 +118,7 @@ MarkerLayer(
             children: [
               SizedBox(
                 child: Text(
-                  '수정 전 위치',
+                  '${value[2]}',
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -195,33 +135,6 @@ MarkerLayer(
           ),
         ),
       ]
-    else 
-      // else 블록에서 하나의 Marker 추가
-      Marker(
-        width: 80,
-        height: 80,
-        point: latlng.LatLng(latData, longData), // 핀 위치
-        child: Column(
-          children: [
-            SizedBox(
-              child: Text(
-                '가게 위치',
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.pin_drop, // 핀 아이콘
-              size: 50,
-              color: Colors.red,
-            ),
-          ],
-        ),
-      ),
-  ],
 )
       ],
     );
