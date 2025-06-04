@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/Riverpod/memo_app/.dart_tool/flutter_build/bb1386e1a36e641b416e13c74023c3dc/native_assets.json: 

@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/Provider/provider_must_eat_place_app/.dart_tool/flutter_build/2fcb97835c7b02eb6226a123fbc73ae3/native_assets.json: 

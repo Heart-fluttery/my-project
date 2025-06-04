@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/Getx/textfield_calc_rx_app/.dart_tool/flutter_build/761e44b5ade071bce3ce9249e0c2c438/native_assets.json: 

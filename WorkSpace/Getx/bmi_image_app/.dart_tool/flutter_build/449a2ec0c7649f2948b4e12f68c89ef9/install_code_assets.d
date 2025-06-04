@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/Getx/bmi_image_app/.dart_tool/flutter_build/449a2ec0c7649f2948b4e12f68c89ef9/native_assets.json: 

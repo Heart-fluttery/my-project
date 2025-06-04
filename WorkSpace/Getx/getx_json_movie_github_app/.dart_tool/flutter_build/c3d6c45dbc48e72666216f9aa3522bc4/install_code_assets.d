@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/Getx/getx_json_movie_github_app/.dart_tool/flutter_build/c3d6c45dbc48e72666216f9aa3522bc4/native_assets.json: 

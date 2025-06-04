@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/FastAPI/flutter_python_app/.dart_tool/flutter_build/f7db6315a426da6349e57199208ce50a/native_assets.json: 

@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/Riverpod/json_movie_github_app/.dart_tool/flutter_build/5f7b166a0b2fb93bd7ffadb47452db61/native_assets.json: 

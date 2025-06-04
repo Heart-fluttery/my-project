@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/Getx/memo_app/.dart_tool/flutter_build/3bca191aa60fd1dbd87f54ff33488b6f/native_assets.json: 

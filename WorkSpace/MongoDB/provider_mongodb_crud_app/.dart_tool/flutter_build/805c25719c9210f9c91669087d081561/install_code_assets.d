@@ -1,0 +1,1 @@
+ /Users/Heartfluttery/Documents/Git/my-project/WorkSpace/MongoDB/provider_mongodb_crud_app/.dart_tool/flutter_build/805c25719c9210f9c91669087d081561/native_assets.json: 
